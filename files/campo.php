@@ -1,5 +1,9 @@
 <?php
-$nome = $_GET['id_campo'];
+require_once "database.php";
+
+    $nome = $_GET['id_campo'];
+    $data = Database::getInstance()->getConnection();
+    $st = $data -> query("SELECT * FROM campi WHERE nome_campo = '$nome'");
 ?>
 
 <!doctype html>
