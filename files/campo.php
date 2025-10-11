@@ -1,9 +1,41 @@
 <?php
+use databases\database;
 require_once "database.php";
 
     $nome = $_GET['id_campo'];
+    $err = false;
     $data = Database::getInstance()->getConnection();
-    $st = $data -> query("SELECT * FROM campi WHERE nome_campo = '$nome'");
+    $st = $data -> prepare("SELECT * FROM campi WHERE nome_campo = :nome");
+    $st -> execute(['nome' => $nome]);
+    $res = $st -> fetch();
+    if(empty($res)){
+        header("Location: ../index.php");
+    }
+    $sta = $data -> prepare("SELECT * FROM utenti");
+    $sta -> execute();
+    $resu = $sta -> fetchAll();
+    $statem = $data->prepare("SELECT prenotazioni.data_prenotazione AS data, 
+                                    utenti.username AS username
+                               FROM prenotazioni 
+                               JOIN utenti ON prenotazioni.id_utente = utenti.id 
+                               WHERE prenotazioni.id_campo = :idcampo 
+                               ORDER BY prenotazioni.data_prenotazione");
+    $statem -> execute(['idcampo' => $nome]);
+    $pren = $statem -> fetchAll();
+    if(!empty($_POST)){
+        try{
+            $state = $data -> prepare("INSERT INTO prenotazioni (id_campo, id_utente, data_prenotazione) VALUES (:id_campo, :id_utente, :data)");
+            $state -> execute([
+                    ':id_campo' => $_POST['nome_campo'],
+                    ':id_utente' => $_POST['utente'],
+                    ':data' => $_POST['data']
+            ]);
+            header("Location: ../index.php");
+        }
+        catch (Exception $e){
+            $err = true;
+        }
+    }
 ?>
 
 <!doctype html>
@@ -15,10 +47,59 @@ require_once "database.php";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?=$nome?></title>
     <link href="./css/index.css" rel="stylesheet">
+    <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>
+<?php if($err == true) echo("Errore nella prenotazione")?>
+<div class="row">
+    <a href="../index.php">Indietro</a>
+</div>
+<hr>
 <div class="row">
     <h1><?=$nome?></h1>
+</div>
+<div class="row">
+    <div class="col box">
+        <div class="row">
+            <h3><?=$res['nome_campo']?></h3>
+            <h4><?=$res['capienza']?> persone</h4>
+        </div>
+        <div class="box-img">
+            <img src="<?=$res['foto_url']?>">
+        </div>
+    </div>
+    <div class="col box">
+        <form method="post" class="col">
+            <h3>Prenotazione</h3>
+            <hr>
+            <div class="col">
+                <label for="capienza_dentro">Capienza:</label>
+                <input min="1" required type="number" id="capienza_dentro" name="capienza_dentro">
+            </div>
+            <div class="col">
+                <label for="utente">Utente:</label>
+                <select required name="utente" id="utente">
+                    <?php foreach ($resu as $utente) { ?>
+                        <option value="<?=$utente['id']?>"><?=$utente['nome']?></option>
+                    <?php }?>
+                </select>
+            </div>
+            <div class="col">
+                <label for="data">Data:</label>
+                <input required name="data" type="date" id="data">
+            </div>
+            <input readonly type="hidden" value="<?=$res['nome_campo']?>" name="nome_campo">
+            <input type="submit" value="Prenota">
+        </form>
+    </div>
+    <div class="col box">
+        <h3>Prenotazioni</h3>
+       <div class="col">
+           <?php foreach ($pren as $pre) { ?>
+               <h5><?=$pre['username']?> - <?=$pre['data']?></h5>
+           <?php }?>
+       </div>
+    </div>
 </div>
 </body>
 </html>

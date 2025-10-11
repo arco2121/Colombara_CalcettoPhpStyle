@@ -1,33 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Sancreek&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 *
 {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.1s ease;
     text-align: center;
-    font-family: "Sancreek";
-    font-weight: 600;
+    font-family: "Nunito";
+    font-weight: 1000;
     text-space: 3px;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+*::-webkit-scrollbar
+{
+    display: none;
+}
+*:focus
+{
+    outline: none;
 }
 hr
 {
-    border: solid black 2px;
+    border: solid black 4px;
     width: 95%;
+    border-radius: 1000px;
 }
 html
 {
     width: 100%;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     margin: 0 auto;
 }
 body
 {
     flex-direction: column;
-    display: flex;
     width: 100%;
-    height: 100%;
+    height: auto;
     margin: 0 auto;
-    background: #ffe589;
+    background: linear-gradient(to left top, #ffe589, #f3d97d, #e8cd71, #dcc265, #d1b659);
 }
-div
+div,form
 {
     display: flex;
     width: auto;
@@ -36,6 +47,7 @@ div
     height: auto;
     gap: 10px;
     flex-wrap: wrap;
+    padding: 10px 30px;
 }
 div img
 {
@@ -44,11 +56,15 @@ div img
     object-fit: cover;
     border-radius: 25px;
 }
+img
+{
+    border: solid black 5px;
+}
 .row
 {
     flex-direction: row;
-    width: 100%;
-    height: fit-content;
+    width: auto;
+    height: auto;
 }
 .col
 {
@@ -59,13 +75,43 @@ div img
 }
 .box
 {
-    border: solid black 3px;
+    border: solid black 5px;
     border-radius: 20px;
     width: fit-content;
     padding: 10px;
-    margin: 10px;
+    margin: 20px;
 }
 .full
 {
     height: 100%;
+    width: auto;
+}
+a
+{
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 10px;
+    color: black;
+    margin: 10px;
+    border: solid black 5px;
+}
+img:active,input:active,a:active
+{
+    scale: 0.95;
+}
+label
+{
+    font-size: 12px;
+}
+input,select
+{
+    background: rgba(110, 202, 190, 0.82);
+    border-radius: 100px;
+    border: solid black 4px;
+    font-size: 12px;
+    padding: 5px;
+}
+.nope
+{
+    display: contents;
 }
