@@ -2,17 +2,29 @@
 use databases\database;
 require_once "database.php";
 require_once "NavBar_Element.php";
-
+session_start();
 $nome = "Login";
-$data = Database::getInstance()->getConnection();
 if(!empty($_POST))
 {
-
+    $data = Database::getInstance()->getConnection();
+    $stmt = $data->prepare("SELECT * from utenti WHERE username = :username");
+    $stmt->execute([":username" => $_POST['username']]);
+    $utente = $stmt->fetch();
+    if($utente && password_verify($_POST['password'], $utente['password']))
+    {
+        $_SESSION['username'] = $utente['username'];
+        header("Location: ../index.php");
+        exit;
+    }
+    else
+    {
+        $err = "Non valido";
+    }
 }
 ?>
 
-    <!doctype html>
-    <html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -36,4 +48,4 @@ if(!empty($_POST))
     </div>
 </div>
 </body>
-    </html><?php
+    </html>

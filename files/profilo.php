@@ -7,7 +7,7 @@ require_once "NavBar_Element.php";
     $data = Database::getInstance()->getConnection();
     if(!empty($_POST))
     {
-        if(!empty($_POST["logout"]))
+        if(isset($_POST["logout"]) && $_POST["logout"] == 1)
         {
             session_destroy();
             header("Location: ./login.php");
@@ -72,6 +72,12 @@ require_once "NavBar_Element.php";
            ?>
        </div>
     </div>
+</div>
+<div class="col">
+    <form method="post" action="./profilo.php">
+        <input type="hidden" value="1" name="logout">
+        <input type="submit" value="Logout">
+    </form>
 </div>
 </body>
 </html>
