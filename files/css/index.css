@@ -38,7 +38,7 @@ body
     margin: 0 auto;
     background: linear-gradient(to left top, #ffe589, #f3d97d, #e8cd71, #dcc265, #d1b659);
 }
-div,form
+div,form,nav
 {
     display: flex;
     width: auto;
@@ -49,7 +49,7 @@ div,form
     flex-wrap: wrap;
     padding: 10px 30px;
 }
-div img
+div img, nav img
 {
     width: 300px;
     height: 200px;
@@ -80,6 +80,7 @@ img
     width: fit-content;
     padding: 10px;
     margin: 20px;
+    min-width: 280px;
 }
 .full
 {

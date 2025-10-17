@@ -20,10 +20,11 @@ require_once "files/database.php";
     <link href="./files/css/index.css" rel="stylesheet">
 </head>
 <body>
+<?php require_once "files/NavBar_Element.php";
+?>
     <div class="row">
         <h1><?=$title?></h1>
     </div>
-    <hr>
     <div class="full row">
         <?php foreach ($result as $row) {?>
             <div class="col box">

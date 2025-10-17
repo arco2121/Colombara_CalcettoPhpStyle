@@ -50,11 +50,9 @@ require_once "database.php";
     <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>
-<?php if($err == true) echo("Errore nella prenotazione")?>
-<div class="row">
-    <a href="../index.php">Indietro</a>
-</div>
-<hr>
+<?php if($err == true) echo("Errore nella prenotazione");
+    require_once "NavBar_Element.php";
+?>
 <div class="row">
     <h1><?=$nome?></h1>
 </div>
@@ -95,9 +93,11 @@ require_once "database.php";
     <div class="col box">
         <h3>Prenotazioni</h3>
        <div class="col">
-           <?php foreach ($pren as $pre) { ?>
+           <?php if(!empty($pren)) { foreach ($pren as $pre) { ?>
                <h5><?=$pre['username']?> - <?=$pre['data']?></h5>
-           <?php }?>
+           <?php } } else{
+           echo "<p>Nessun campo per prenotazione</p>";
+           }?>
        </div>
     </div>
 </div>
