@@ -1,9 +1,9 @@
 <?php
-use databases\database;
-require_once "database.php";
+require_once "../database.php";
+require_once "../send_mail.php";
 require_once "NavBar_Element.php";
-session_start();
 $nome = "Login";
+$err = "";
 if(!empty($_POST))
 {
     $data = Database::getInstance()->getConnection();
@@ -13,6 +13,7 @@ if(!empty($_POST))
     if($utente && password_verify($_POST['password'], $utente['password']))
     {
         $_SESSION['username'] = $utente['username'];
+        sendLoginMail($utente['username']."@gmail.com", $utente['nome']);
         header("Location: ../index.php");
         exit;
     }
@@ -35,6 +36,7 @@ if(!empty($_POST))
     <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>
+<?php if($err != "") echo $err;?>
 <div class="row">
     <h1><?=$nome?></h1>
 </div>

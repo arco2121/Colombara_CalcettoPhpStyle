@@ -1,7 +1,6 @@
 <?php
-use databases\database;
 
-require_once "files/database.php";
+require_once "database.php";
 
     $title = "Calcetto";
     $data = Database::getInstance()->getConnection();

@@ -1,7 +1,13 @@
 <?php
+session_start();
 $st = explode("/", $_SERVER['PHP_SELF']);
 $path = $st[count($st) - 1];
 $logged = isset($_SESSION['username']);
+if(!$logged && $path != "index.php" && $path != "login.php")
+{
+    header("Location: login.php");
+    exit;
+}
 ?>
 <nav class="row>">
     <?php if($path != "index.php"){?><a href="../index.php">Home</a><?php }?>

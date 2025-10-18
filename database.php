@@ -1,7 +1,8 @@
 <?php
-namespace databases;
-use PDO;
-
+require __DIR__ . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+$dotenv->required("HOST")->notEmpty();
 class database
 {
     private static $istance = null;
@@ -9,7 +10,7 @@ class database
 
     private function __construct()
     {
-        $this -> db = new PDO("mysql:host=localhost;dbname=col_php_database", "root", "",[
+        $this -> db = new PDO("mysql:host=".$_ENV['HOST'].";dbname=".$_ENV['DATABASE'], "root", "",[
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
     }
@@ -27,3 +28,4 @@ class database
         return $this -> db;
     }
 }
+

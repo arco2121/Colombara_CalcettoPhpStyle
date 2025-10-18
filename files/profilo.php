@@ -1,6 +1,5 @@
 <?php
-use databases\database;
-require_once "database.php";
+require_once "../database.php";
 require_once "NavBar_Element.php";
 
     $nome = "Profilo";
@@ -20,7 +19,8 @@ require_once "NavBar_Element.php";
         );
         $std -> execute([":id_utente" => $_POST['id_utente'], ":id_campo" => $_POST['id_campo'], ":data_prenotazione" => $_POST['data_prenotazione']]);
     }
-    $sta = $data -> query("SELECT prenotazioni.*, utenti.username FROM prenotazioni JOIN utenti ON prenotazioni.id_utente = utenti.id");
+    $sta = $data -> prepare("SELECT prenotazioni.*, utenti.username FROM prenotazioni JOIN utenti ON prenotazioni.id_utente = utenti.id WHERE utenti.username = :id");
+    $sta -> execute([":id" => $_SESSION['username']]);
     $st = $sta->fetchAll();
 ?>
 
@@ -46,22 +46,8 @@ require_once "NavBar_Element.php";
            <?php
            if(!empty($st))
            {
-               $ute = $st[0]["username"];
-               echo "<div class='col'>
-                                <h4>".$ute."</h4>
-               ";
                foreach ($st as $pre) {
-                   if($pre["username"] == $ute){
-                       echo("<form action='profilo.php' method='post'><h5>".$pre['username']." - ".$pre['data_prenotazione']."</h5><input type='hidden' name='id_utente' value='".$pre['id_utente']."'><input type='hidden' name='id_campo' value='".$pre['id_campo']."'><input type='hidden' name='data_prenotazione' value='".$pre['data_prenotazione']."'><input type='submit' value='Elimina'></form>");
-                       continue;
-                   }
-                   if($pre["username"] != $ute){
-                       $ute = $pre["username"];
-                       echo "</div>";
-                       echo "<div class='col'>
-                            <h4>".$ute."</h4>
-                    ";
-                   }
+                   echo("<form action='profilo.php' method='post'><h5>".$pre['username']." - ".$pre['data_prenotazione']."</h5><input type='hidden' name='id_utente' value='".$pre['id_utente']."'><input type='hidden' name='id_campo' value='".$pre['id_campo']."'><input type='hidden' name='data_prenotazione' value='".$pre['data_prenotazione']."'><input type='submit' value='Elimina'></form>");
                }
                echo "</div>";
            }
