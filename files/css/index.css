@@ -82,10 +82,10 @@ img
 {
     border: solid black 5px;
     border-radius: 20px;
-    width: fit-content;
+    width: auto;
     padding: 10px;
     margin: 20px;
-    min-width: 280px;
+    min-width: 500px;
 }
 .full
 {
