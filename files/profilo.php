@@ -32,7 +32,7 @@ require_once "NavBar_Element.php";
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?=$nome?></title>
-    <link href="./css/index.css" rel="stylesheet">
+    <link href="style" rel="stylesheet">
     <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>

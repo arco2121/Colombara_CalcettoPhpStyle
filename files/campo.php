@@ -1,5 +1,5 @@
 <?php
-require_once "../database.php";
+require_once "database.php";
 require_once "NavBar_Element.php";
 
 $nome = $_GET['id_campo'];
@@ -9,7 +9,7 @@ $st = $data -> prepare("SELECT * FROM campi WHERE nome_campo = :nome");
 $st -> execute(['nome' => $nome]);
 $res = $st -> fetch();
 if(empty($res)){
-    header("Location: ../index.php");
+    header("Location: ./");
 }
 $aia = $data->prepare("SELECT id FROM utenti WHERE username = :nome");
 $aia -> execute(['nome' => $_SESSION["username"]]);
@@ -49,7 +49,7 @@ if(!empty($_POST)){
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?=$nome?></title>
-    <link href="./css/index.css" rel="stylesheet">
+    <link href="style" rel="stylesheet">
     <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>

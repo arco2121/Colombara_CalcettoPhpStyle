@@ -1,6 +1,7 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+require dirname(__DIR__) . '/vendor/autoload.php';
+$patha = dirname(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($patha);
 $dotenv->load();
 $dotenv->required("HOST")->notEmpty();
 class database

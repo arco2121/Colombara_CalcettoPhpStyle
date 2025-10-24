@@ -1,6 +1,6 @@
 <?php
-require_once "../database.php";
-require_once "../send_mail.php";
+require_once "database.php";
+require_once "send_mail.php";
 require_once "NavBar_Element.php";
 $nome = "Login";
 $err = "";
@@ -14,7 +14,7 @@ if(!empty($_POST))
     {
         $_SESSION['username'] = $utente['username'];
         sendLoginMail($utente['username']."@gmail.com", $utente['nome']);
-        header("Location: ../index.php");
+        header("Location: ./");
         exit;
     }
     else
@@ -32,7 +32,7 @@ if(!empty($_POST))
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?=$nome?></title>
-    <link href="./css/index.css" rel="stylesheet">
+    <link href="style" rel="stylesheet">
     <link rel="icon" href="../files/img/ico.png">
 </head>
 <body>
@@ -42,7 +42,7 @@ if(!empty($_POST))
 </div>
 <div class="row">
     <div class="col box">
-        <form action="./login.php" method="post" class="col">
+        <form action="./login" method="post" class="col">
            <input type="text" name="username" required>
             <input type="password" name="password" required>
             <input type="submit" value="Vai">

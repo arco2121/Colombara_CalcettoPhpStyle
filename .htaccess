@@ -1,0 +1,21 @@
+RewriteEngine on
+
+RewriteBase /Colombara_CalcettoPhpStyle/
+
+DirectoryIndex files/index.php
+
+
+#Regole routing
+RewriteRule ^campo/?$ files/campo.php [L,QSA]
+RewriteRule ^profilo/?$ files/profilo.php [L,QSA]
+RewriteRule ^login/?$ files/login.php [L,QSA]
+RewriteRule ^login/?$ files/login.php [L,QSA]
+RewriteRule ^style?$ files/css/index.css [L,QSA]
+
+# Se richiedo un file (-f) o una directory (-d) la serve
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Tutti gli altri casi redirect su index.php con query string append [QSA]
+RewriteRule ^(.*)$ files/index.php [L,QSA]
